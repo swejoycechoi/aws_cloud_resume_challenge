@@ -206,6 +206,15 @@ section {
     gap: 1rem;
 }
 
+/* Visitor counter styling */
+#visitor-counter {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: rgb(163, 163, 163);
+}
+
 /* ICONS */
 
 .icon {
