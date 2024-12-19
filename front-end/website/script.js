@@ -5,27 +5,27 @@ function toggleMenu() {
     icon.classList.toggle("open");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const visitorCountSpan = document.getElementById("visitor-counter");
+const apiUrl = 'https://0ootsin9k1.execute-api.us-west-1.amazonaws.com/prod/visitor-counter';
 
-    fetch("https://0ootsin9k1.execute-api.us-west-1.amazonaws.com/prod/visitor-counter", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
+async function getVisitorCount() {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            // Assuming the API response has a field "visitor_count"
-            visitorCountSpan.textContent = `Visitor Count: ${data.visitor_count}`;
-        })
-        .catch((error) => {
-            console.error("Failed to fetch visitor count:", error);
-            visitorCountSpan.textContent = "Error!";
-        });
-});
+
+        // Parse JSON response
+        const data = await response.json();
+        console.log('API Response:', data); // Debugging: Should log { visitor_count: 60 }
+
+        // Extract visitor count and display it
+        const visitorCount = data.visitor_count; // Ensure key matches exactly
+        document.getElementById('visitor-count').textContent = visitorCount;
+
+    } catch (error) {
+        console.error('Failed to fetch visitor count:', error);
+        document.getElementById('visitor-count').textContent = 'Error';
+    }
+}
+
+window.addEventListener('DOMContentLoaded', getVisitorCount);
