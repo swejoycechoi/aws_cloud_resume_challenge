@@ -1,0 +1,44 @@
+Resources:
+  VisitorCountTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: VisitorCountTable
+      AttributeDefinitions:
+        - AttributeName: visitor_count
+          AttributeType: S
+      KeySchema:
+        - AttributeName: visitor_count
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  VisitorCounterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: hello_world/app.lambda_handler  # Update to match your function
+      Runtime: python3.10
+      CodeUri: hello_world/
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: VisitorCountTable
+      Environment:
+        Variables:
+          TABLE_NAME: VisitorCountTable
+
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors: "'*'"
+      DefinitionBody:
+        swagger: "2.0"
+        info:
+          title: VisitorCounterAPI
+        paths:
+          /:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: "aws_proxy"
+                uri:
+                  Fn::Sub: >-
+                    arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${VisitorCounterFunction.Arn}/invocations
