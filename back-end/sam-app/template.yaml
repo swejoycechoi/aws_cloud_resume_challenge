@@ -2,20 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
 Resources:
-  VisitorCountTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: VisitorCountTable
-      AttributeDefinitions:
-        - AttributeName: visitor_count
-          AttributeType: S
-      KeySchema:
-        - AttributeName: visitor_count
-          KeyType: HASH
-      BillingMode: PAY_PER_REQUEST
-    DeletionPolicy: Retain
-    UpdateReplacePolicy: Retain
-
   VisitorCounterFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -23,33 +9,25 @@ Resources:
       Runtime: python3.10
       CodeUri: hello_world/
       Policies:
-        - DynamoDBCrudPolicy:
-            TableName: VisitorCountTable
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:us-west-1:710271919598:table/VisitorCountTable
       Environment:
         Variables:
           TABLE_NAME: VisitorCountTable
-      Events:
-        GetMethod:
-          Type: Api
-          Properties:
-            Path: /visitor-count
-            Method: GET
-        PostMethod:
-          Type: Api
-          Properties:
-            Path: /visitor-count
-            Method: POST
-        OptionsMethod:
-          Type: Api
-          Properties:
-            Path: /visitor-count
-            Method: OPTIONS
 
-  ApiGateway:
-    Type: AWS::Serverless::Api
-    Properties:
-      StageName: Prod
-      Cors:
-        AllowMethods: "'GET,POST,OPTIONS'"
-        AllowHeaders: "'Content-Type'"
-        AllowOrigin: "'*'"
+Outputs:
+  VisitorCountTableArn:
+    Value: arn:aws:dynamodb:us-west-1:710271919598:table/VisitorCountTable
+    Export:
+      Name: VisitorCountTableArn
+
+  ApiGatewayUrl:
+    Value: https://0ootsin9k1.execute-api.us-west-1.amazonaws.com/Prod/visitor-count
+    Export:
+      Name: ApiGatewayUrl
