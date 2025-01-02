@@ -1,0 +1,15 @@
+{
+    "Items": [
+        {
+            "visits": {
+                "N": "488"
+            },
+            "visitor_count": {
+                "S": "visitor_count"
+            }
+        }
+    ],
+    "Count": 1,
+    "ScannedCount": 1,
+    "ConsumedCapacity": null
+}

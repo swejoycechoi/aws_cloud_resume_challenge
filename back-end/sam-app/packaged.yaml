@@ -1,30 +1,29 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-
 Resources:
   VisitorCountTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: VisitorCountTable
       AttributeDefinitions:
-        - AttributeName: visitor_count
-          AttributeType: S
+      - AttributeName: visitor_count
+        AttributeType: S
       KeySchema:
-        - AttributeName: visitor_count
-          KeyType: HASH
+      - AttributeName: visitor_count
+        KeyType: HASH
       BillingMode: PAY_PER_REQUEST
     DeletionPolicy: Retain
-    UpdateReplacePolicy: Retain
-
+    Metadata:
+      SamResourceId: VisitorCountTable
   VisitorCounterFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: hello_world/app.lambda_handler
       Runtime: python3.10
-      CodeUri: hello_world/
+      CodeUri: s3://swejoyce.com/c6ce8fa8b5a97dd022ecd006536eb5a4
       Policies:
-        - DynamoDBCrudPolicy:
-            TableName: VisitorCountTable
+      - DynamoDBCrudPolicy:
+          TableName: VisitorCountTable
       Environment:
         Variables:
           TABLE_NAME: VisitorCountTable
@@ -44,12 +43,15 @@ Resources:
           Properties:
             Path: /visitor-count
             Method: OPTIONS
-
+    Metadata:
+      SamResourceId: VisitorCounterFunction
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
       Cors:
-        AllowMethods: "'GET,POST,OPTIONS'"
-        AllowHeaders: "'Content-Type'"
-        AllowOrigin: "'*'"
+        AllowMethods: '''GET,POST,OPTIONS'''
+        AllowHeaders: '''Content-Type'''
+        AllowOrigin: '''*'''
+    Metadata:
+      SamResourceId: ApiGateway
