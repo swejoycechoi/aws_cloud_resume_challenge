@@ -1,0 +1,7 @@
+[
+  "tests/test_api.py::test_cors_headers",
+  "tests/test_api.py::test_dynamodb_reset_behavior",
+  "tests/test_api.py::test_get_request",
+  "tests/test_api.py::test_malformed_payload",
+  "tests/test_api.py::test_post_invalid_payload"
+]
