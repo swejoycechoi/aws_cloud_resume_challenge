@@ -3,6 +3,3 @@
 *.tfstate
 *.tfstate.backup
 *.zip
-
-# Ignore Terraform state and provider files
-**/.terraform/
