@@ -77,12 +77,12 @@ _[in progress...]_
 
 3. Deploy the infrastructure:
 ```
-terraform init
-terraform plan
-terraform apply
+   terraform init
+   terraform plan
+   terraform apply
 ```
 
 4. Visit the deployed website to see the project live
 ```
-https://www.swejoyce.com
+   https://www.swejoyce.com
 ```
