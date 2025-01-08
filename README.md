@@ -67,22 +67,23 @@ _[in progress...]_
 ## How to Use
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/swejoycechoi/aws_cloud_resume_challenge.git
+```
+git clone https://github.com/swejoycechoi/aws_cloud_resume_challenge.git
+```
 
 2. Navigate to the project directory:
-```bash
-   cd aws_cloud_resume_challenge
+```
+cd aws_cloud_resume_challenge
 ```
 
 3. Deploy the infrastructure:
 ```
-   terraform init
-   terraform plan
-   terraform apply
+terraform init
+terraform plan
+terraform apply
 ```
 
 4. Visit the deployed website to see the project live
 ```
-   https://www.swejoyce.com
+https://www.swejoyce.com
 ```
