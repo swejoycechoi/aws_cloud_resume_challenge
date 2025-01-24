@@ -30,7 +30,7 @@ The **AWS Cloud Resume Challenge** is a hands-on project designed to demonstrate
 
 ## Architecture Diagram
 
-_[in progress...]_
+![Architecture Diagram](images/awsDiagram.jpeg)
 
 ---
 

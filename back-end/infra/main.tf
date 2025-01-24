@@ -29,6 +29,8 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
+
+
 # Reference the location of Lambda function
 data "archive_file" "zip" {
     type = "zip"
